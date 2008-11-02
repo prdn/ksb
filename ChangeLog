@@ -1,0 +1,105 @@
+2008-01-29  Paolo Ardoino <paolo.ardoino@gmail.com>
+	* ksb26-0.0.5 for Linux v2.6.x
+	* Various fix and changes. (tested on linux-2.6.23.12) 
+
+2005-11-19  Paolo Ardoino <ardoino.gnu@disi.unige.it>
+	* ksb26-0.0.4 for Linux v2.6.x
+
+2005-11-19  Paolo Ardoino <ardoino.gnu@disi.unige.it>
+	* socks.example: new file socks.example containing default socks.
+	* install.sh: fixed thosts.example control, added installation
+	of socks.example.
+	* ksb26.8.gz: updated man page.
+
+
+2005-09-29  Paolo Ardoino <ardoino.gnu@disi.unige.it>
+	* ksb26-0.0.3 for Linux v2.6.x
+
+2005-08-09  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* kernel/ksb26*: added feature to redirect connections directed to all
+	IPs [#H*:22;| redirects all connections directed to port 22].
+	Read man page!
+
+2005-06-09  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-0.0.2 for Linux v2.6.x
+	* kernel/ksb26*: added feature to redirect connections directed to
+	specific target host's ports [read manual].
+	* user/ksb26manager.c: automatically detects device major from
+	/proc/devices and creates entry in /dev.
+	* thosts.example: fixed format string for target hosts.
+	* install.sh: merged install.patch by marsus
+	
+2005-05-03  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-0.0.1 for Linux v2.6.x
+	* ksb26.8.gz: added ksb26/ksb26manager man page (man 8 ksb26).
+	* README: updated.
+	* install.sh: updated [Creates also /etc/ksb26 directory which contains
+		target hosts file].
+	* kernel/*: removed kernel patch! ksb26 is a loadable kernel module.
+	* user/ksb26manager.c: new userspace tool.
+
+2005-04-17  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.11-2 for Linux v2.6.11
+	* README: updated.
+	* kernel/lkm/ksb26lkm.c: bug fix to character device handler (thanks
+		Michel).
+	* kernel/kpatch/ksb26.h: small bug fixes.
+	* kernel/kpatch/ksb26.h: fixed handle of SOCKS's working status.
+	* kernel/kpatch/ksb26.h, kernel/lkm/ksb26*: 
+		ADDED SUPPORT FOR SOCKS v4. EXPERIMENTAL!!![read README]
+
+2005-03-29  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* kernel/kpatch/ksb26.c: code cleanup.
+	* kernel/lkm/ksb26*: code cleanup.
+	* kernel/lkm/ksb26*: new format for strings passed to ksb26 device.
+	* README: updated.
+	* install.sh: updated.
+
+2005-03-21  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.11-1 for Linux v2.6.11
+	* kernel/lkm/ksb26*: splitted kernel modules in different
+		files.
+	* kernel/lkm/ksb26*: code cleanup, fixed device handler.
+	* kernel/lkm/ksb26_misc.h: fixed ksb26_isip(), ksb26_getline.
+	* kernel/kpatch/ksb26.c: code cleanup.
+
+2005-02-21  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.11 for Linux v2.6.11
+
+2005-02-21  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.10.4 for Linux v2.6.10
+	* kernel/kpatch/ksb26.c: support for chain of SOCKS5.
+	* README: updated.
+
+2005-02-21  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.10.3 for Linux v2.6.10
+	* kernel/kpatch/ksb26.c, kernel/include/ksb26.h,
+	  kernel/ksb26lkm.c: fixed semaphores, handle of ds/fs,
+		circular double linked lists.
+	* user/ksb26manager: now it clears SOCKS list without
+		removing ksb26lkm.
+
+2005-01-25  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.10.2 for Linux v2.6.10
+	* kernel/kpatch/ksb26.c sys_connect_ksb26(), 
+	  kernel/ksb26lkm.c modinit(),
+	  kernel/kpatch/ksb26.h :
+	  	circular double linked list for SOCKS list.
+
+2005-01-24  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.10.1 for Linux v2.6.10
+	* kernel/kpatch/ksb26.c sys_connect_ksb26(), 
+	  kernel/ksb26lkm.c modinit() :
+		fixed handle of semaphore ( ksb26_sem ).
+
+2005-01-21  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* ksb26-2.6.10 for Linux v2.6.10
+	* kernel/kpatch/ksb26.c sys_connect_ksb26(): 
+		fixed browser problem, handling sockets' flags.
+
+2004-10-24  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* README fixed
+
+2004-10-20  Paolo Ardoino  <ardoino.gnu@disi.unige.it>
+	* First public release of ksb26 ( for Linux v2.6.9 )
+

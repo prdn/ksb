@@ -1,0 +1,8 @@
+# Target hosts file for ksb26
+# This file contains ip addresses of target hosts [when KSB26 finds a new connection from localhost
+# to that host, this connection will pass through a SOCKS chain before reach the target host].
+#
+# Please read man page ( man ksb26 ) for format of target hosts ( remember that '#' as first character
+# is part of the format and not a comment )
+
+#H=host_ip:port

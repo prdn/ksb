@@ -1,0 +1,117 @@
+Kernel Socks Bouncer for 2.6.x kernels
+
+
+0] HOW ksb26 WORKS
+1] HOW TO INSTALL ksb26
+2] CONCLUSION
+
+0] HOW ksb26 WORKS and WHY A KERNEL MODULE? 
+
+
+* ksb26 redirects connections through a chain of SOCKS5 servers to improve your 
+  anonimity on the Net.
+
+* I have choosen this implementation to:
+	* add support to ALL userspace programs that use kernel's sys_connect system call.
+	* enjoy myself writing in kernel space.
+
+
+1] HOW TO INSTALL ksb26
+
+1.0] Installation script [ Recommended ]
+
+Default path of the Linux kernel source directory is:
+kernel_dir=/usr/src/linux
+Default path for the installation of ksb26manager [userspace tool] is:
+bin_dir=/usr/bin
+You can modify this two path simply editing install.sh
+To install ksb26 simply run ./install.sh 
+This script: 
+* builds ksb26 Linux kernel module and copies it to
+/lib/modules/2.6.x/extra
+* copies ksb26manager, the managment tool, to /usr/bin [default]
+
+1.1] Manual installation
+
+* Unpack ksb26-x-x-x.tar.gz archive:
+~# mv ksb26-x-x-x.tar.gz /usr/src
+~# cd /usr/src
+~# tar zxvf ksb26.tar.gz
+
+* Build ksb26.c running makemod.sh shell script:
+~# cd /usr/src/ksb26/kernel/
+~# ./makemod.sh
+
+* Copy ksb26.ko to /lib/modules/2.6.x/extra [where 2.6.x is the version
+of the Linux Kernel you're using].
+
+* Copy ksb26manager [ksb26 Manager] to /usr/bin
+[For more informations about ksb26manager read 1.4]
+
+1.2] Loading ksb26 module and /dev/ksb26 device creation
+~# modprobe ksb26 // loads the module with default values
+~# modprobe ksb26 nsocks=N // loads the module; ksb26 will use a chain
+				of N SOCKS [Ex. nsocks=3].
+[~# insmod /lib/modules/2.6.x/extra/ksb26.ko ]
+
+* Create a character device in /dev directory using major number of ksb26 kernel module.
+To detect major number read dmesg kernel logs running for example:
+~# dmesg
+or
+~# cat /var/log/messages
+Between messages of ksb26 module there's this string:
+[ksb26] Major device number = num
+~# mknod /dev/ksb26 c num 0 // creates the char device
+
+1.3] /dev/ksb26 device
+/dev/ksb26 is the character device used by ksb26 to keep SOCKS and target hosts lists updated.
+Strings formats accepted:
+* ip addresses and port of SOCKS5
+* ip addresses of target hosts [when ksb26 finds a new connection from localhost
+to that host, this connection will pass through a SOCKS chain before reach the target host]
+* clear SOCKS list string [ csl ] : ksb26 clears the SOCKS list
+
+Socks format :
+S=socks_ip:socks_port
+
+Manual submission of a new SOCKS: ~# echo "S=127.0.0.1:1080" > /dev/ksb26
+
+If you use ksb26manager you can set a default socks list in /etc/ksb26/socks that will be loaded
+automatically by the userspace tool .
+
+If you don't use ksb26manager you can create a new file as this below:
+example:
+S=127.0.0.1:1080
+and then:
+~# cat socks.txt > /dev/ksb26
+
+To add a new target host to the list [if you use the userspace manager see /etc/ksb26/thosts]:
+H=host_ip:host_port
+If host_ip is *, connection directed to all IPs will be redirected.
+If host_port is 0, all connection directed to that host will be redirected through a Socks chain.
+example:
+H=*:22
+H=192.168.0.1:22
+H=192.168.0.2:0
+H=*:0 [deprecated]
+
+To clear SOCKS list:
+C
+
+1.4] ksb26manager
+is the userspace manager for ksb26 lkm. It needs wget, egrep and sed to work.
+[You don't need ksb26manager. You can add SOCKS and target hosts manually via /dev/ksb26 character device]
+ksb26manager keeps updated the SOCKS list using http://ksb26.sourceforge.net/socks/socks5.php
+
+ksb26manager [-h] [-d ksb26_device] [-m ksb26_lkm_name] [-n nsocks] [-t thosts_file] [-w wait_time]
+[-d ksb26_device]: character device used by ksb26
+[-m ksb26_lkm_name]: lkm's name to use in modprobe command
+[-n nsocks]: number of SOCKS used in chains
+[-t thosts_file]: file containing target hosts [default /etc/ksb26/thosts]
+[-s socks_file]: file containing default socks list [default /etc/ksb26/thosts]
+[-w wait_time]: number of seconds to wait before updating the SOCKS list
+[-h]: help
+
+2] CONCLUSION
+For any question, problem or request write me to:
+paolo.ardoino@gmail.com
